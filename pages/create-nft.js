@@ -26,6 +26,7 @@ const CreateItem=()=> {
       )
       const url = `https://ipfs.infura.io/ipfs/${added.path}`
       setFileUrl(url)
+      console.log(url)
     } catch (error) {
       console.log('Error uploading file: ', error)
     }  
@@ -66,41 +67,64 @@ const CreateItem=()=> {
   }
 
   return (
-    <div className="flex justify-center">
-      <div className="w-1/2 flex flex-col pb-12">
-        <input 
+    <div className="mx-64 my-32">
+      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div className="mb-5">
+          <label className="block text-gray-700 text-sm font-bold mb-2" >
+          Asset Name
+          </label>
+          <input 
           placeholder="Asset Name"
-          className="mt-8 border rounded p-4"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           onChange={e => updateFormInput({ ...formInput, name: e.target.value })}
-        />
-        <textarea
+          />   
+        </div>
+
+        <div className="mb-5">
+          <label className="block text-gray-700 text-sm font-bold mb-2" >
+            Asset Description
+          </label>
+          <textarea
           placeholder="Asset Description"
-          className="mt-2 border rounded p-4"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           onChange={e => updateFormInput({ ...formInput, description: e.target.value })}
-        />
-        <input
+          />
+        </div>
+
+        <div className="mb-5">
+          <label className="block text-gray-700 text-sm font-bold mb-2" >
+             Asset Price in Eth
+          </label>
+          <input
           placeholder="Asset Price in Eth"
-          className="mt-2 border rounded p-4"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
-        />
-        <input
+          />
+        </div>
+          
+        <div className="mb-5">
+          <label className="block text-gray-700 text-sm font-bold mb-2" >
+            Add a file
+          </label>
+          <input
           type="file"
           name="Asset"
           className="my-4"
           onChange={onChange}
-        />
-        {
-          fileUrl && (
-            <img className="rounded mt-4" width="350" src={fileUrl} />
-          )
-        }
-        <button onClick={listNFTForSale} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
+          />
+          {
+          fileUrl && (<img className="rounded mt-4" width="350" src={fileUrl} />)
+          }
+        </div>
+        
+        <button onClick={listNFTForSale} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ">
           Create NFT
         </button>
       </div>
     </div>
-  )
-}
+  )}
 
 
 export default CreateItem
+
+

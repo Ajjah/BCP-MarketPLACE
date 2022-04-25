@@ -54,31 +54,36 @@ const Home = () => {
     await transaction.wait()
     loadNFTs()
   }
+  const imageClick = () => {
+    console.log('Click');
+  }
   if (loadingState === 'loaded' && !nfts.length) return (<h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>)
   return (
-    <div className="flex justify-center">
-      <div className="px-4" style={{ maxWidth: '1600px' }}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+    <section className="body-font text-gray-600">
+
+    <div className="container mx-auto px-5 py-24">
+      <div className="-m-4 flex flex-wrap">
           {
             nfts.map((nft, i) => (
-              <div key={i} className="border shadow rounded-xl overflow-hidden">
-                <img src={nft.image} />
-                <div className="p-4">
-                  <p style={{ height: '64px' }} className="text-2xl font-semibold">{nft.name}</p>
-                  <div style={{ height: '70px', overflow: 'hidden' }}>
-                    <p className="text-gray-400">{nft.description}</p>
+              <div key={i} className="p-8 md:w-1/3">
+                <div className="h-full rounded-xl shadow-cla-blue bg-gradient-to-r from-indigo-50 to-blue-50 overflow-hidden">
+                 <img src={nft.image} className="duration-400 w-full scale-110 object-cover object-center transition-all hover:scale-100 md:h-36 lg:h-48" onClick={() => imageClick()}/>
+                <div className="p-6">
+                  <h2 className="title-font mb-1 text-xs font-medium tracking-widest text-gray-400"> {nft.description}</h2>
+                  <h1  className="title-font mb-3 text-lg font-medium text-gray-600">{nft.name}</h1>
+                  <p className="mb-3 leading-relaxed">{nft.price} ETH</p>
+                  <div className="flex flex-wrap items-center ">
+                    <button className="shadow-cla-violate rounded-lg bg-gradient-to-r from-blue-300 to-blue-400 px-4 py-1 drop-shadow-md hover:scale-105" onClick={() => buyNft(nft)}>Buy</button>
                   </div>
                 </div>
-                <div className="p-4 bg-black">
-                  <p className="text-2xl font-bold text-white">{nft.price} ETH</p>
-                  <button className="mt-4 w-full bg-pink-500 text-white font-bold py-2 px-12 rounded" onClick={() => buyNft(nft)}>Buy</button>
                 </div>
               </div>
             ))
           }
+          </div>
         </div>
-      </div>
-    </div>
+        </section>
+
   )
 }
 
