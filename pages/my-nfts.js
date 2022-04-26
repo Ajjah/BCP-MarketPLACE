@@ -5,7 +5,7 @@ import axios from 'axios'
 import Web3Modal from 'web3modal'
 import { useRouter } from 'next/router'
 
-import {marketplaceAddress} from '../configuration'
+import { marketplaceAddress } from '../configuration'
 import NFTMarketplace from '../artifacts/contracts/NFT.sol/NFTMarketplace.json'
 
 export default function MyAssets() {
@@ -42,7 +42,7 @@ export default function MyAssets() {
       return item
     }))
     setNfts(items)
-    setLoadingState('loaded') 
+    setLoadingState('loaded')
   }
   function listNFT(nft) {
     console.log('nft:', nft)
@@ -52,20 +52,20 @@ export default function MyAssets() {
   return (
     <div className="container mx-auto px-5 py-24">
       <div className="-m-4 flex flex-wrap">
-          {
-            nfts.map((nft, i) => (
-              <div key={i} className="p-8 md:w-1/3">
-                <div className="h-full rounded-xl shadow-cla-blue bg-gradient-to-r from-indigo-50 to-blue-50 overflow-hidden">
+        {
+          nfts.map((nft, i) => (
+            <div key={i} className="p-8 md:w-1/3">
+              <div className="h-full rounded-xl shadow-cla-blue bg-gradient-to-r from-indigo-50 to-blue-50 overflow-hidden">
                 <img src={nft.image} className="duration-400 w-full scale-110 object-cover object-center transition-all hover:scale-100 md:h-36 lg:h-48" />
                 <div className="p-6">
                   <p className="title-font mb-1 text-xs font-medium tracking-widest text-gray-400">Price - {nft.price} Eth</p>
                   <button className="mt-4 w-full bg-pink-500 text-white font-bold py-2 px-12 rounded" onClick={() => listNFT(nft)}>List</button>
                 </div>
               </div>
-              </div>
-            ))
-          }
-        </div>
+            </div>
+          ))
+        }
       </div>
+    </div>
   )
 }

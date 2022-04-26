@@ -7,10 +7,10 @@ import Web3Modal from 'web3modal'
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
-import {marketplaceAddress} from '../configuration'
+import { marketplaceAddress } from '../configuration'
 import NFTMarketplace from '../artifacts/contracts/NFT.sol/NFTMarketplace.json'
 
-const CreateItem=()=> {
+const CreateItem = () => {
   const [fileUrl, setFileUrl] = useState(null)
   const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' })
   const router = useRouter()
@@ -29,7 +29,7 @@ const CreateItem=()=> {
       console.log(url)
     } catch (error) {
       console.log('Error uploading file: ', error)
-    }  
+    }
   }
   async function uploadToIPFS() {
     const { name, description, price } = formInput
@@ -45,7 +45,7 @@ const CreateItem=()=> {
       return url
     } catch (error) {
       console.log('Error uploading file: ', error)
-    }  
+    }
   }
 
   async function listNFTForSale() {
@@ -62,7 +62,7 @@ const CreateItem=()=> {
     listingPrice = listingPrice.toString()
     let transaction = await contract.createToken(url, price, { value: listingPrice })
     await transaction.wait()
-   
+
     router.push('/')
   }
 
@@ -70,14 +70,15 @@ const CreateItem=()=> {
     <div className="mx-64 my-32">
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-5">
+
           <label className="block text-gray-700 text-sm font-bold mb-2" >
-          Asset Name
+            Asset Name
           </label>
-          <input 
-          placeholder="Asset Name"
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          onChange={e => updateFormInput({ ...formInput, name: e.target.value })}
-          />   
+          <input
+            placeholder="Asset Name"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            onChange={e => updateFormInput({ ...formInput, name: e.target.value })}
+          />
         </div>
 
         <div className="mb-5">
@@ -85,44 +86,45 @@ const CreateItem=()=> {
             Asset Description
           </label>
           <textarea
-          placeholder="Asset Description"
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          onChange={e => updateFormInput({ ...formInput, description: e.target.value })}
+            placeholder="Asset Description"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            onChange={e => updateFormInput({ ...formInput, description: e.target.value })}
           />
         </div>
 
         <div className="mb-5">
           <label className="block text-gray-700 text-sm font-bold mb-2" >
-             Asset Price in Eth
+            Asset Price in Eth
           </label>
           <input
-          placeholder="Asset Price in Eth"
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
+            placeholder="Asset Price in Eth"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            onChange={e => updateFormInput({ ...formInput, price: e.target.value })}
           />
         </div>
-          
+
         <div className="mb-5">
           <label className="block text-gray-700 text-sm font-bold mb-2" >
             Add a file
           </label>
           <input
-          type="file"
-          name="Asset"
-          className="my-4"
-          onChange={onChange}
+            type="file"
+            name="Asset"
+            className="my-4"
+            onChange={onChange}
           />
           {
-          fileUrl && (<img className="rounded mt-4" width="350" src={fileUrl} />)
+            fileUrl && (<img className="rounded mt-4" width="350" src={fileUrl} />)
           }
         </div>
-        
+
         <button onClick={listNFTForSale} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ">
           Create NFT
         </button>
       </div>
     </div>
-  )}
+  )
+}
 
 
 export default CreateItem
