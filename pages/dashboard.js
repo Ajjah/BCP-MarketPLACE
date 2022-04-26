@@ -7,6 +7,8 @@ import NFTMarketplace from '../artifacts/contracts/NFT.sol/NFTMarketplace.json'
 export default function CreatorDashboard() {
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
+  const [fullscreen,setfullscreen] = useState(false);
+  const [image,setimage]=useState('');
   useEffect(() => {loadNFTs()}, [])
 
   async function loadNFTs() {
@@ -38,17 +40,30 @@ export default function CreatorDashboard() {
     setNfts(items)
     setLoadingState('loaded') 
   }
+
+  const imageClick = (img) => {
+    console.log('Click');
+    setfullscreen(true)
+    setimage(img);
+  }
+
+
   if (loadingState === 'loaded' && !nfts.length) return (<h1 className="py-10 px-20 text-3xl">No NFTs listed</h1>)
   return (
     <div>
       <div className="container mx-auto px-5 py-24">
          <h2 className="title-font mb-1 text-xl font-medium tracking-widest text-red-400">Items Listed</h2> 
+         {fullscreen? 
+      <div>
+         <img src={image} className="w-4/12 h-4/12 rounded-lg mx-auto" onMouseOut={()=>setfullscreen(false)}/>
+         
+      </div> :
           <div className="-m-4 flex flex-wrap">
           {
             nfts.map((nft, i) => (
               <div key={i} className="p-8 md:w-1/3">
                 <div className="h-full rounded-xl shadow-cla-blue bg-gradient-to-r from-indigo-50 to-blue-50 overflow-hidden">
-                <img src={nft.image} className="duration-400 w-full scale-110 object-cover object-center transition-all hover:scale-100 md:h-36 lg:h-48" />
+                <img src={nft.image} className="duration-400 w-full scale-110 object-cover object-center transition-all hover:scale-100 md:h-36 lg:h-48" onMouseOver={() => imageClick(nft.image)} />
                 <div className="p-6">
                   <p className="shadow-cla-violate rounded-lg bg-gradient-to-r from-gray-300 to-gray-400 px-4 py-1 drop-shadow-md hover:scale-105">Price - {nft.price} Eth</p>
               </div>
@@ -57,7 +72,7 @@ export default function CreatorDashboard() {
               </div>
             ))
           }
-        </div>
+        </div>}
       </div>
     </div>
   )

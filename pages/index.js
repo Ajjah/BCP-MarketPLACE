@@ -6,8 +6,10 @@ import {marketplaceAddress,link_id} from '../configuration'
 import NFTMarketplace from '../artifacts/contracts/NFT.sol/NFTMarketplace.json'
 
 const Home = () => {
-  const [nfts, setNfts] = useState([])
-  const [loadingState, setLoadingState] = useState('not-loaded')
+  const [nfts, setNfts] = useState([]);
+  const [loadingState, setLoadingState] = useState('not-loaded');
+  const [fullscreen,setfullscreen] = useState(false);
+  const [image,setimage]=useState('');
   useEffect(() => { loadNFTs() }, []);
 
   async function loadNFTs() {
@@ -36,6 +38,7 @@ const Home = () => {
       return item
     }))
     setNfts(items)
+    console.log("nfts",items)
     setLoadingState('loaded') 
   }
   async function buyNft(nft) {
@@ -54,20 +57,26 @@ const Home = () => {
     await transaction.wait()
     loadNFTs()
   }
-  const imageClick = () => {
+  const imageClick = (img) => {
     console.log('Click');
+    setfullscreen(true)
+    setimage(img);
   }
   if (loadingState === 'loaded' && !nfts.length) return (<h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>)
   return (
     <section className="body-font text-gray-600">
-
     <div className="container mx-auto px-5 py-24">
+      {fullscreen? 
+      <div>
+         <img src={image} className="w-4/12 h-4/12 rounded-lg mx-auto" onMouseOut={()=>setfullscreen(false)}/>
+         
+      </div> :
       <div className="-m-4 flex flex-wrap">
           {
             nfts.map((nft, i) => (
               <div key={i} className="p-8 md:w-1/3">
                 <div className="h-full rounded-xl shadow-cla-blue bg-gradient-to-r from-indigo-50 to-blue-50 overflow-hidden">
-                 <img src={nft.image} className="duration-400 w-full scale-110 object-cover object-center transition-all hover:scale-100 md:h-36 lg:h-48" onClick={() => imageClick()}/>
+                 <img src={nft.image} className={"duration-400 w-full scale-110 object-cover object-center transition-all hover:scale-100 md:h-36 lg:h-48"} onMouseOver={() => imageClick(nft.image)} />
                 <div className="p-6">
                   <h2 className="title-font mb-1 text-xs font-medium tracking-widest text-gray-400"> {nft.description}</h2>
                   <h1  className="title-font mb-3 text-lg font-medium text-gray-600">{nft.name}</h1>
@@ -80,9 +89,9 @@ const Home = () => {
               </div>
             ))
           }
-          </div>
-        </div>
-        </section>
+          </div>}
+    </div>
+    </section>
 
   )
 }
